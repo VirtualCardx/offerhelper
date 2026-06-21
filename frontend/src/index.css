@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: "IBM Plex Sans", "Noto Sans SC", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #f4f4f5;
+  background: #09090b;
+}
+
+body {
+  margin: 0;
+  min-width: 1280px;
+  background: #09090b;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.glass-card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(22px);
+}
+
+.glass-card .ant-card-body,
+.offer-table .ant-table,
+.offer-table .ant-table-container,
+.offer-table .ant-table-thead > tr > th,
+.offer-table .ant-table-tbody > tr > td {
+  background: transparent !important;
+}
+
+.offer-table .ant-table-thead > tr > th {
+  color: #a1a1aa !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.offer-table .ant-table-tbody > tr > td {
+  color: #e4e4e7 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+
+.ant-input,
+.ant-input-number,
+.ant-select-selector,
+.ant-input-affix-wrapper {
+  border-radius: 16px !important;
+}
+
+.ant-card {
+  border-radius: 28px !important;
+}
+
+.ant-btn {
+  border-radius: 16px;
+}
+
+.ant-drawer .ant-drawer-header,
+.ant-drawer .ant-drawer-body {
+  background: #ffffff;
+}

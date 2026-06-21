@@ -1,0 +1,80 @@
+version: "3.9"
+
+x-app-env: &app-env
+  APP_ENV: container
+  DATABASE_URL: sqlite:////app/data/offer_engine.db
+  CELERY_BROKER_URL: redis://redis:6379/0
+  CELERY_RESULT_BACKEND: redis://redis:6379/1
+  CELERY_TASK_ALWAYS_EAGER: "false"
+  CELERY_TASK_STORE_EAGER_RESULT: "true"
+  CORS_ALLOW_ORIGINS: http://127.0.0.1:3000,http://localhost:3000,http://127.0.0.1:5173,http://localhost:5173
+
+services:
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  api:
+    build:
+      context: ../..
+      dockerfile: deployments/docker/Dockerfile.api
+    env_file:
+      - ../../.env.example
+    environment:
+      <<: *app-env
+    ports:
+      - "8000:8000"
+    volumes:
+      - app-data:/app/data
+      - model-artifacts:/app/artifacts
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: ../..
+      dockerfile: deployments/docker/Dockerfile.worker
+    env_file:
+      - ../../.env.example
+    environment:
+      <<: *app-env
+    volumes:
+      - app-data:/app/data
+      - model-artifacts:/app/artifacts
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  beat:
+    build:
+      context: ../..
+      dockerfile: deployments/docker/Dockerfile.worker
+    command: python -m celery -A apps.worker.celery_app:celery_app beat -l info
+    env_file:
+      - ../../.env.example
+    environment:
+      <<: *app-env
+    volumes:
+      - app-data:/app/data
+      - model-artifacts:/app/artifacts
+    depends_on:
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ../..
+      dockerfile: deployments/docker/Dockerfile.frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+
+volumes:
+  app-data:
+  model-artifacts:

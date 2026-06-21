@@ -1,0 +1,37 @@
+{
+  "modelName": "baseline-offer-acceptance",
+  "modelVersion": "0.7.4",
+  "framework": "xgboost",
+  "runtime": {
+    "type": "python-pickle-proba",
+    "modelPath": "baseline-offer-acceptance-0.7.4.pkl",
+    "featureOrder": [
+      "offer_to_market_ratio",
+      "raise_ratio",
+      "interview_score",
+      "has_other_offer"
+    ]
+  },
+  "config": {
+    "probability_floor": "0.10",
+    "probability_ceiling": "0.95"
+  },
+  "metrics": {
+    "source": "demo-trained-export-pipeline",
+    "trainingAccuracy": 1.0,
+    "trainingLogLoss": 0.006914,
+    "trainingSampleCount": 8,
+    "trainingAcceptanceRate": "0.6250"
+  },
+  "trainingSummary": {
+    "sampleCount": 8,
+    "acceptedCount": 5,
+    "acceptanceRate": "0.6250",
+    "featureAverages": {
+      "offer_to_market_ratio": "1.0127",
+      "raise_ratio": "0.1886",
+      "interview_score": "83.0000",
+      "has_other_offer": "0.5000"
+    }
+  }
+}

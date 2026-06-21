@@ -1,0 +1,28 @@
+{
+  "modelName": "baseline-offer-acceptance",
+  "modelVersion": "0.3.0",
+  "framework": "xgboost",
+  "runtime": {
+    "type": "python-pickle-proba",
+    "modelPath": "baseline-offer-acceptance-0.3.0.pkl",
+    "featureOrder": [
+      "offer_to_market_ratio",
+      "raise_ratio",
+      "interview_score",
+      "has_other_offer"
+    ]
+  },
+  "config": {
+    "base_probability": "0.50",
+    "offer_market_bonus": "0.16",
+    "raise_bonus": "0.11",
+    "high_score_bonus": "0.07",
+    "medium_score_bonus": "0.05",
+    "competing_offer_penalty": "0.03",
+    "probability_floor": "0.10",
+    "probability_ceiling": "0.95"
+  },
+  "metrics": {
+    "auc": 0.86
+  }
+}
